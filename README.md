@@ -13,3 +13,6 @@ Conjunto de desafios de Java.
 
 ## [Products](https://github.com/docafavarato/java-challenges/blob/main/Products/Product.java)
 > Three classes that simulates three different types of products: common, used and imported.
+
+## [Tax payers](https://github.com/docafavarato/java-challenges/blob/main/Tax/TaxPayer.java)
+> An abstract class with two inherited ones that simulates the tax on a individual person and a company.

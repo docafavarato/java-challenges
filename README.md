@@ -7,3 +7,6 @@ Conjunto de desafios de Java.
 
 ## [Order](https://github.com/docafavarato/java-challenges/blob/main/Order/Order.java)
 > Multiple classes that simulates a client buying multiple products.
+
+## [Employee](https://github.com/docafavarato/java-challenges/blob/main/Employee/Employee.java)
+> Two inherited classes that simulates the payment of two different types of employees.

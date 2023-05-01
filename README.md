@@ -10,3 +10,6 @@ Conjunto de desafios de Java.
 
 ## [Employee](https://github.com/docafavarato/java-challenges/blob/main/Employee/Employee.java)
 > Two inherited classes that simulates the payment of two different types of employees.
+
+## [Products](https://github.com/docafavarato/java-challenges/blob/main/Products/Product.java)
+> Three classes that simulates three different types of products: common, used and imported.

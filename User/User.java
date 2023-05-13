@@ -1,53 +1,82 @@
 package entities;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-	private String userEmail;
 	private String userName;
-	private String userPassword;
-	private Integer userId;
-	private Integer followersAmount = 0;
-	private Integer followingAmount = 0;
+	private String email;
+	private String password;
+	private String creationDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+	private List<Post> posts = new ArrayList<>();
+	private List<Post> likedPosts = new ArrayList<>();
+	private List<Comment> comments = new ArrayList<>();
 	private List<User> followers = new ArrayList<>();
-	private List<User> following = new ArrayList<>();
 	
-	
-	public User(String userEmail, String userName, String userPassword, Integer userId) {
-		this.userEmail = userEmail;
+	public User(String userName, String email, String password) {
 		this.userName = userName;
-		this.userPassword = userPassword;
-		this.userId = userId;
+		this.email = email;
+		this.password = password;
 	}
 	
-	public String getUserEmail() { return this.userEmail; }
-	
-	public String getUserName() { return this.userName; }
-	
-	public String getPassword() { return this.userPassword; }
-	
-	public Integer getUserId() { return this.userId; }
-	
-	public Integer getFollowersAmount() { return this.followersAmount; }
-	
-	public Integer getFollowingAmount() { return this.followingAmount; }
-	
-	public List<User> getFollowers() { return this.followers; }
-	
-	public List<User> getFollowing() { return this.following; }
-	
-	public void setUserName(String userName) { 
-		this.userName = userName; 
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
+	public String getEmail() {
+		return email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getCreationDate() {
+		return creationDate;
+	}
+
+	public List<Post> getPosts() {
+		return posts;
 	}
 	
-	public void follow(User user_to) {
-		this.followingAmount++;
-		this.following.add(user_to);
-		user_to.followersAmount++;
-		user_to.followers.add(this);
+	public List<Post> getLikedPosts() {
+		return likedPosts;
+	}
+	
+	public List<Comment> getComments() {
+		return comments;
+	}
+	
+	public List<User> getFollowers() {
+		return followers;
+	}
+	 
+	public void like(Post post) {
+		post.getUsersThatLiked().add(this);
+		this.likedPosts.add(post);
+		post.likes++;
+	}
+	
+	public void unlike(Post post) {
+		post.getUsersThatLiked().remove(this);
+		this.likedPosts.remove(post);
+	}
+	
+	public void follow(User user) {
+		user.followers.add(this);
+	}
+	
+	public void unfollow(User user) {
+		user.followers.remove(this);
+	}
+	
+	public boolean follows(User user) {
+		if (user.getFollowers().contains(this)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

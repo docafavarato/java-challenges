@@ -2,8 +2,10 @@ package entities;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Comment {
+	private Integer id;
 	private User user;
 	private Post post;
 	private String content;
@@ -13,8 +15,11 @@ public class Comment {
 		this.user = user;
 		this.post = post;
 		this.content = content;
-		this.user.getComments().add(this);
-		this.post.getComments().add(this);
+		this.id = ThreadLocalRandom.current().nextInt(0, 999999999 + 1);
+	}
+	
+	public Integer getId() {
+		return this.id;
 	}
 
 	public User getUser() {

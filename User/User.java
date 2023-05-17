@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Actions {
 	private String userName;
 	private String email;
 	private String password;
@@ -14,6 +14,7 @@ public class User {
 	private List<Post> likedPosts = new ArrayList<>();
 	private List<Comment> comments = new ArrayList<>();
 	private List<User> followers = new ArrayList<>();
+	private int followersAmount = 0;
 	
 	public User(String userName, String email, String password) {
 		this.userName = userName;
@@ -52,24 +53,63 @@ public class User {
 	public List<User> getFollowers() {
 		return followers;
 	}
+	
+	public int getFollowersAmount() {
+		return this.followersAmount;
+	}
+	
+	public void setFollowersAmount(int amount) {
+		this.followersAmount = amount;
+	}
 	 
-	public void like(Post post) {
-		post.getUsersThatLiked().add(this);
-		this.likedPosts.add(post);
-		post.likes++;
+	@Override
+	public void like(Integer id, User user) {
+		for (Post post : user.getPosts()) {
+			if (post.getId().equals(id)) {
+				post.setLikes(post.getLikes() + 1);
+				post.getUsersThatLiked().add(this);
+				this.getLikedPosts().add(post);
+			}
+		}
 	}
 	
-	public void unlike(Post post) {
-		post.getUsersThatLiked().remove(this);
-		this.likedPosts.remove(post);
+	@Override
+	public void unlike(Integer id, User user) {
+		for (Post post : user.getPosts()) {
+			if (post.getId().equals(id)) {
+				post.setLikes(post.getLikes() - 1);
+				post.getUsersThatLiked().remove(this);
+				this.getLikedPosts().remove(post);
+			}
+		}
 	}
 	
+	@Override
 	public void follow(User user) {
-		user.followers.add(this);
+		user.getFollowers().add(this);
+		user.setFollowersAmount(user.getFollowersAmount() + 1);
 	}
 	
+	@Override
 	public void unfollow(User user) {
-		user.followers.remove(this);
+		user.getFollowers().remove(this);
+		user.setFollowersAmount(user.getFollowersAmount() - 1);
+	}
+	
+	@Override
+	public void post(String title, String content) {
+		this.getPosts().add(new Post(this, title, content));
+	}
+	
+	@Override
+	public void comment(User user, Integer id, String content) {
+		for (Post post : user.getPosts()) {
+			if (post.getId().equals(id)) {
+				Comment c = new Comment(user, post, content);
+				this.getComments().add(c);
+				post.getComments().add(c);
+			}
+		}
 	}
 	
 	public boolean follows(User user) {

@@ -1,16 +1,17 @@
 package entities;
-
+import java.util.concurrent.ThreadLocalRandom;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Post {
+	private Integer id;
 	private User user;
 	private String title;
 	private String content;
 	private String creationDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));;
-	protected int likes;
+	private int likes;
 	private List<User> usersThatLiked = new ArrayList<>();
 	private List<Comment> comments = new ArrayList<>();
 	
@@ -18,7 +19,7 @@ public class Post {
 		this.user = user;
 		this.title = title;
 		this.content = content;
-		this.user.getPosts().add(this);
+		this.id = ThreadLocalRandom.current().nextInt(0, 999999999 + 1);
 	}
 
 	public User getUser() {
@@ -47,5 +48,13 @@ public class Post {
 	
 	public int getLikes() {
 		return likes;
+	}
+	
+	public void setLikes(int amount) {
+		this.likes = amount;
+	}
+	
+	public Integer getId() {
+		return this.id;
 	}
 }

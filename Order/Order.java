@@ -41,8 +41,7 @@ public class Order {
 		double sum = 0;
 		for (OrderItem item : this.items) {
 			sum += item.subTotal();
-		}
-		return sum;
+		} return sum;
 	}
 	
 	public List<OrderItem> getItems() { return this.items; }
